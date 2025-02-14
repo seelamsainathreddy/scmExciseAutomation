@@ -183,7 +183,7 @@ useEffect(() => {
 
       const json = JSON.stringify({ 'brandLocalCodesMapping': mapping, 'fileName': fileName }, null, 2);
       console.log("body sent to server is ", json)
-      const response = await fetch('http://127.0.01:5001/downloadExcelFiles', {
+      const response = await fetch('http://scmgovtexcisebackend-production.up.railway.app:8080/downloadExcelFiles', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // Set the content type to JSON

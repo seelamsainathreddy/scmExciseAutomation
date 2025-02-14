@@ -12,7 +12,7 @@ const Home = () => {
         formData.append("file", file); // Append the file to FormData
     
         try {
-          const response = await fetch("http://127.0.0.1:5001/upload", { // Update with your Flask endpoint
+          const response = await fetch("http://scmgovtexcisebackend-production.up.railway.app:8080/upload", { // Update with your Flask endpoint
             method: "POST",
             body: formData,
           });
