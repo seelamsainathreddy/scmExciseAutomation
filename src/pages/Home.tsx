@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import { backendURL } from "../assets/variables";
 const Home = () => {
     const [file, setFile] = useState<File | null>(null);
     const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Home = () => {
         formData.append("file", file); // Append the file to FormData
     
         try {
-          const response = await fetch("http://scmgovtexcisebackend-production.up.railway.app:8080/upload", { // Update with your Flask endpoint
+          const response = await fetch(`${backendURL}/upload`, { // Update with your Flask endpoint
             method: "POST",
             body: formData,
           });

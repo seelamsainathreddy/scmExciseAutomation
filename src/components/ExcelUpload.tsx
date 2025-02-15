@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Suggestions from './Suggestions';
 import { useLocation } from 'react-router-dom';
-
+import { backendURL } from '../assets/variables';
 
 
 
@@ -183,7 +183,7 @@ useEffect(() => {
 
       const json = JSON.stringify({ 'brandLocalCodesMapping': mapping, 'fileName': fileName }, null, 2);
       console.log("body sent to server is ", json)
-      const response = await fetch('http://scmgovtexcisebackend-production.up.railway.app:8080/downloadExcelFiles', {
+      const response = await fetch(`${backendURL}/downloadExcelFiles`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // Set the content type to JSON
