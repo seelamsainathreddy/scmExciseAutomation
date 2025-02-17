@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const backendURL = process.env.BACKEND_URL; // Access the backend URL
+const backendURL = import.meta.env.VITE_BACKEND_URL; // Access the backend URL
 
 
 

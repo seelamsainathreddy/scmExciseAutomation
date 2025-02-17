@@ -2,8 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Suggestions from './Suggestions';
 import { useLocation } from 'react-router-dom';
-const backendURL = process.env.BACKEND_URL; // Access the backend URL
-
+const backendURL = import.meta.env.VITE_BACKEND_URL; // Access the backend URL
 const ExcelUpload: React.FC = ( ) => {
 
 
