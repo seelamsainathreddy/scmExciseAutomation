@@ -220,22 +220,22 @@ useEffect(() => {
     }
   };
 
-  const getNearestBrand  = (brand: string, item: string) => {
-     const results = getSuggestions(brand);
-     const topSuggestions = results.slice(0, 20);
-     return topSuggestions.find(suggestion => suggestion.includes(item.match(/\d+/g)?.join('') || '')) || '';
+  const getNearestBrand  = (brand: string) => {
+    const brandName = brand.split('(')[0];
+    const quantity = brand.split('(')[1];
+    const results = getSuggestions(brandName);
+    const topSuggestions = results.slice(0, 20);
+    return topSuggestions.find(suggestion => suggestion.includes(quantity.match(/\d+/g)?.join('') || '')) || '';
   }
 
   
   const setDataFromJson = (json: string) => {
     try {
-      const parsedData: Record<string, string[]> = JSON.parse(json);      
-      const formattedData = Object.entries(parsedData).flatMap(([brand, items]) => {
-      return items.map((item: string) => ({
-          'Brand Name': `${brand} (${item})`,
-          'Govt_Brand_Names': `${getNearestBrand(brand, item)}`
-        }));
-      });
+      const parsedData: string[] = JSON.parse(json); 
+      const formattedData = parsedData.map((item: string) => ({
+        'Brand Name': item,
+        'Govt_Brand_Names': getNearestBrand(item) 
+      }));
       setData(formattedData);
     } catch (error) {
       console.error('JSON parsing error:', error);
