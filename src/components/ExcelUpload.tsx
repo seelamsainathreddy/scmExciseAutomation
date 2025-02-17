@@ -2,9 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Suggestions from './Suggestions';
 import { useLocation } from 'react-router-dom';
-import { backendURL } from '../assets/variables';
-
-
+const backendURL = process.env.BACKEND_URL; // Access the backend URL
 
 const ExcelUpload: React.FC = ( ) => {
 
@@ -231,10 +229,10 @@ useEffect(() => {
   
   const setDataFromJson = (json: string) => {
     try {
-      const parsedData: string[] = JSON.parse(json); 
+      const parsedData: string[] = JSON.parse(json);
       const formattedData = parsedData.map((item: string) => ({
         'Brand Name': item,
-        'Govt_Brand_Names': getNearestBrand(item) 
+        'Govt_Brand_Names': getNearestBrand(item)
       }));
       setData(formattedData);
     } catch (error) {

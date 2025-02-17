@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { backendURL } from "../assets/variables";
+
+const backendURL = process.env.BACKEND_URL; // Access the backend URL
+
+
+
 const Home = () => {
     const [file, setFile] = useState<File | null>(null);
     const navigate = useNavigate();

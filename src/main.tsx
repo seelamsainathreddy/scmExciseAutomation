@@ -6,6 +6,9 @@ import Home from "./pages/Home";
 import Editor from "./pages/Editor";
 import ExcelUpload from "./components/ExcelUpload";
 // import './index.css'
+
+import dotenv from 'dotenv';
+dotenv.config();
 const rootElement = document.getElementById("root");
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
