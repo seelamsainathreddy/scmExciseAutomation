@@ -20,14 +20,17 @@ const ExcelUpload: React.FC = ( ) => {
   const [isSuggestionsVisible, setIsSuggestionsVisible] = useState<boolean>(false);
   const [selectedCell, setSelectedCell] = useState<{rowIndex: number; columnId: string} | null>(null);
 
-    //console.log(JSON.stringify(response))
-    const localCodesMap = response['localCodesMap'];
-    const allSuggestions = Object.keys(response['localCodesMap']);
-    console.log(localCodesMap, allSuggestions)
+  //console.log(JSON.stringify(response))
+  const localCodesMap = response['localCodesMap'];
+  const allSuggestions = Object.keys(response['localCodesMap']);
+  console.log(localCodesMap, allSuggestions)
 
+  const localCodeBrandMap = Object.fromEntries(
+    Object.entries(localCodesMap).map(([key, value]) => [value, key])
+  );
 
 useEffect(() => {
-  setDataFromJson(JSON.stringify(response['localBrands']))
+  setDataFromJson(response['localBrands'],response['globalMapping'])
 },[])
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,9 +44,7 @@ useEffect(() => {
       const fileContent = e.target?.result;
       console.log('Raw file content:', fileContent); // Raw content log
       
-      if (typeof fileContent === 'string') {
-        setDataFromJson(fileContent);
-      }
+
     };
    // console.log(data)
     reader.readAsText(file);
@@ -217,21 +218,20 @@ useEffect(() => {
     }
   };
 
-  const getNearestBrand  = (brand: string) => {
-    const brandName = brand.split('(')[0];
-    const quantity = brand.split('(')[1];
-    const results = getSuggestions(brandName);
-    const topSuggestions = results.slice(0, 20);
-    return topSuggestions.find(suggestion => suggestion.includes(quantity.match(/\d+/g)?.join('') || '')) || '';
-  }
+  // const getNearestBrand  = (brand: string) => {
+  //   const brandName = brand.split('(')[0];
+  //   const quantity = brand.split('(')[1];
+  //   const results = getSuggestions(brandName);
+  //   const topSuggestions = results.slice(0, 20);
+  //   return topSuggestions.find(suggestion => suggestion.includes(quantity.match(/\d+/g)?.join('') || '')) || '';
+  // }
 
   
-  const setDataFromJson = (json: string) => {
+  const setDataFromJson = (localCodes: string[], globalMapping: {[key: string]: string} ) => {
     try {
-      const parsedData: string[] = JSON.parse(json);
-      const formattedData = parsedData.map((item: string) => ({
+      const formattedData = localCodes.map((item: string) => ({
         'Brand Name': item,
-        'Govt_Brand_Names': getNearestBrand(item)
+        'Govt_Brand_Names': localCodeBrandMap[globalMapping[item]] || 'unknown'
       }));
       setData(formattedData);
     } catch (error) {
